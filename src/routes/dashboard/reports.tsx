@@ -111,15 +111,39 @@ function PdfRecordsPage() {
     })
   }
 
-  const handleDownload = (id: number) => {
-    // For now, just open the PDF in a new tab
-    window.open(`/api/pdf-records/${id}/download`, '_blank')
-  }
+import pdfRecordService from '@/api/services/pdfRecordService'
 
-  const handleDownloadCsv = (id: number) => {
-    // For now, just open the CSV in a new tab
-    window.open(`/api/pdf-records/${id}/csvDownload`, '_blank')
-  }
+// ... (rest of the imports)
+
+  const handleDownload = async (id: number) => {
+    try {
+      const blob = await pdfRecordService.downloadPdfById(id);
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `record-${id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (error) {
+      console.error('Failed to download PDF', error);
+    }
+  };
+
+  const handleDownloadCsv = async (id: number) => {
+    try {
+      const blob = await pdfRecordService.downloadCsvData(id);
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `record-${id}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (error) {
+      console.error('Failed to download CSV', error);
+    }
+  };
 
   const handleReviewOrApprove = (record: PdfRecord, action: 'review' | 'approve') => {
     setSelectedRecord(record)

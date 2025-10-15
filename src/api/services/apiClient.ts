@@ -60,6 +60,8 @@ export class ApiClient {
       const contentType = response.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
         return await response.json();
+      } else if (contentType && contentType.includes('application/octet-stream')) {
+        return await response.blob() as unknown as T;
       } else {
         // For non-JSON responses (e.g., file downloads)
         return response.text() as unknown as T;
@@ -106,6 +108,14 @@ export class ApiClient {
   protected delete<T>(endpoint: string): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'DELETE',
+    });
+  }
+
+  protected download(endpoint: string): Promise<Blob> {
+    return this.request<Blob>(endpoint, {
+      headers: {
+        'Accept': 'application/octet-stream'
+      }
     });
   }
 }

@@ -78,7 +78,7 @@ const data = {
     },
     {
       title: "Reports",
-      url: "/dashboard/pdf-records",
+      url: "/dashboard/reports",
       icon: IconFileCertificate,
       category: "data"
     },

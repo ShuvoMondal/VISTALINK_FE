@@ -66,12 +66,12 @@ class PdfRecordService extends ApiClient {
 
   // Download PDF by ID
   downloadPdfById = (id: number) => {
-    return this.get<string>(`/api/pdf-records/${id}/download`);
+    return this.download(`/api/pdf-records/${id}/download`);
   };
 
   // Download CSV data
   downloadCsvData = (id: number) => {
-    return this.get<string>(`/api/pdf-records/${id}/csvDownload`);
+    return this.download(`/api/pdf-records/${id}/csvDownload`);
   };
 }
 
