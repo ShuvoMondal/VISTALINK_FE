@@ -44,6 +44,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import pdfRecordService from '@/api/services/pdfRecordService'
 
 export const Route = createFileRoute('/dashboard/reports')({
   component: ReportsPage,
@@ -110,10 +111,6 @@ function PdfRecordsPage() {
       }
     })
   }
-
-import pdfRecordService from '@/api/services/pdfRecordService'
-
-// ... (rest of the imports)
 
   const handleDownload = async (id: number) => {
     try {
